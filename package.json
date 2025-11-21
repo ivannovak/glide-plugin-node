@@ -1,7 +1,7 @@
 {
-  "name": "glide-plugin-docker",
+  "name": "glide-plugin-node",
   "version": "0.0.0-development",
-  "description": "Glide Docker Plugin - Semantic Release Configuration",
+  "description": "Glide Node.js Plugin - Semantic Release Configuration",
   "private": true,
   "scripts": {
     "semantic-release": "semantic-release"
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ivannovak/glide-plugin-docker.git"
+    "url": "https://github.com/ivannovak/glide-plugin-node.git"
   },
   "engines": {
     "node": ">=18.0.0"
