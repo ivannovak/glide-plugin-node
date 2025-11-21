@@ -1,5 +1,5 @@
 # Binaries
-glide-plugin-node
+/glide-plugin-node
 dist/
 
 # Go
