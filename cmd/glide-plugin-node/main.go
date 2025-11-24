@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	// Initialize the Node.js plugin
-	nodePlugin := plugin.New()
+	// Initialize the Node.js gRPC plugin
+	nodePlugin := plugin.NewGRPCPlugin()
 
 	// Run the plugin using the SDK
 	if err := sdk.RunPlugin(nodePlugin); err != nil {
