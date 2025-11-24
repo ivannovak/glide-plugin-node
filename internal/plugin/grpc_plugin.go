@@ -7,13 +7,12 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	v1 "github.com/ivannovak/glide/pkg/plugin/sdk/v1"
+	v1 "github.com/ivannovak/glide/v2/pkg/plugin/sdk/v1"
 )
 
 // GRPCPlugin implements the gRPC GlidePluginServer interface
 type GRPCPlugin struct {
 	*v1.BasePlugin
-	detector *NodeDetector
 }
 
 // NewGRPCPlugin creates a new gRPC-based Node.js plugin
@@ -32,7 +31,6 @@ func NewGRPCPlugin() *GRPCPlugin {
 
 	p := &GRPCPlugin{
 		BasePlugin: v1.NewBasePlugin(metadata),
-		detector:   NewNodeDetector(),
 	}
 
 	// Register all Node commands
@@ -81,7 +79,7 @@ func (p *GRPCPlugin) executeInstall(ctx context.Context, req *v1.ExecuteRequest)
 	}
 
 	// Detect package manager
-	packageManager := p.detector.detectPackageManager(workDir)
+	packageManager := p.detectPackageManager(workDir)
 
 	// Build install command
 	var cmdParts []string
@@ -150,7 +148,7 @@ func (p *GRPCPlugin) executeRun(ctx context.Context, req *v1.ExecuteRequest) (*v
 	}
 
 	// Detect package manager
-	packageManager := p.detector.detectPackageManager(workDir)
+	packageManager := p.detectPackageManager(workDir)
 
 	// Build run command
 	var cmdParts []string
@@ -197,94 +195,19 @@ func (p *GRPCPlugin) executeRun(ctx context.Context, req *v1.ExecuteRequest) (*v
 	}, nil
 }
 
-// DetectContext implements context detection for Node.js projects
-func (p *GRPCPlugin) DetectContext(ctx context.Context, req *v1.ContextRequest) (*v1.ContextResponse, error) {
-	// Use the detector to check if this is a Node.js project
-	projectRoot := req.ProjectRoot
-	if projectRoot == "" {
-		projectRoot = req.WorkingDir
-	}
 
-	// Check if package.json exists
-	packageJSONPath := filepath.Join(projectRoot, "package.json")
-	if _, err := os.Stat(packageJSONPath); os.IsNotExist(err) {
-		// Not a Node.js project
-		return &v1.ContextResponse{
-			ExtensionName: "node",
-			Detected:      false,
-		}, nil
+// detectPackageManager detects which package manager is used in the project
+func (p *GRPCPlugin) detectPackageManager(workDir string) string {
+	// Check for package manager lock files
+	if _, err := os.Stat(filepath.Join(workDir, "pnpm-lock.yaml")); err == nil {
+		return "pnpm"
 	}
-
-	// Run detection
-	data, err := p.detector.Detect(ctx, projectRoot)
-	if err != nil || data == nil {
-		return &v1.ContextResponse{
-			ExtensionName: "node",
-			Detected:      false,
-		}, nil
+	if _, err := os.Stat(filepath.Join(workDir, "yarn.lock")); err == nil {
+		return "yarn"
 	}
-
-	// Convert data map to response
-	dataMap, ok := data.(map[string]interface{})
-	if !ok {
-		return &v1.ContextResponse{
-			ExtensionName: "node",
-			Detected:      false,
-		}, nil
+	if _, err := os.Stat(filepath.Join(workDir, "bun.lockb")); err == nil {
+		return "bun"
 	}
-
-	detected, _ := dataMap["node_detected"].(bool)
-	if !detected {
-		return &v1.ContextResponse{
-			ExtensionName: "node",
-			Detected:      false,
-		}, nil
-	}
-
-	// Build response
-	resp := &v1.ContextResponse{
-		ExtensionName: "node",
-		Detected:      true,
-		Metadata:      make(map[string]string),
-		Frameworks:    []string{},
-		Tools:         []string{},
-	}
-
-	// Convert metadata
-	for k, v := range dataMap {
-		switch k {
-		case "node_detected", "scripts", "frameworks":
-			continue
-		case "package_manager":
-			if str, ok := v.(string); ok {
-				resp.Metadata[k] = str
-				resp.Tools = append(resp.Tools, str)
-			}
-		default:
-			if str, ok := v.(string); ok {
-				resp.Metadata[k] = str
-			} else if b, ok := v.(bool); ok {
-				resp.Metadata[k] = fmt.Sprintf("%v", b)
-			}
-		}
-	}
-
-	// Extract version
-	if nodeVersion, ok := dataMap["node_version"].(string); ok {
-		resp.Version = nodeVersion
-	}
-
-	// Extract frameworks
-	if frameworks, ok := dataMap["frameworks"].([]string); ok {
-		resp.Frameworks = frameworks
-	}
-
-	// Convert module type to framework indicator
-	if moduleType, ok := dataMap["module_type"].(string); ok {
-		if moduleType == "module" {
-			resp.Frameworks = append(resp.Frameworks, "ES Modules")
-		}
-	}
-
-	return resp, nil
+	// Default to npm
+	return "npm"
 }
