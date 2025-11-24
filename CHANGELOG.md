@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/ivannovak/glide-plugin-node/compare/v1.0.0...v2.0.0) (2025-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Plugin now uses gRPC instead of library architecture
+
+### Code Refactoring
+
+* migrate to gRPC architecture and cleanup legacy code ([3616c30](https://github.com/ivannovak/glide-plugin-node/commit/3616c30a23a543c5d838ef38dbbc6817c68c33e4))
+
 ## 1.0.0 (2025-11-21)
 
 
