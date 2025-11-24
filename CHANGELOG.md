@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/ivannovak/glide-plugin-node/compare/v2.0.0...v2.1.0) (2025-11-24)
+
+
+### Features
+
+* add release workflow for cross-platform binaries ([e94c38d](https://github.com/ivannovak/glide-plugin-node/commit/e94c38d8fdf6074a17c8ec853718166ce8bfdec5))
+
 ## [2.0.0](https://github.com/ivannovak/glide-plugin-node/compare/v1.0.0...v2.0.0) (2025-11-24)
 
 
