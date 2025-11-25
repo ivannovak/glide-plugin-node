@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/ivannovak/glide-plugin-node/compare/v2.3.0...v2.3.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* remove CI dependency from release workflow ([bdd2960](https://github.com/ivannovak/glide-plugin-node/commit/bdd2960fe33459f7ad0d24c341486d27b54132ab))
+
 ## [2.3.0](https://github.com/ivannovak/glide-plugin-node/compare/v2.2.0...v2.3.0) (2025-11-25)
 
 
