@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/ivannovak/glide-plugin-node/compare/v2.3.2...v2.3.3) (2025-11-25)
+
+
+### Bug Fixes
+
+* remove command registration from detector-only plugin ([b228cac](https://github.com/ivannovak/glide-plugin-node/commit/b228cacb5d342d6fdc5be5f4826e4929de4f3e81))
+
 ## [2.3.2](https://github.com/ivannovak/glide-plugin-node/compare/v2.3.1...v2.3.2) (2025-11-25)
 
 
