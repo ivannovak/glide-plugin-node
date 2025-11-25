@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/ivannovak/glide-plugin-node/compare/v2.3.1...v2.3.2) (2025-11-25)
+
+
+### Bug Fixes
+
+* correct build path in release workflow ([283ec0b](https://github.com/ivannovak/glide-plugin-node/commit/283ec0b372283a262e130500c7e35b01b735638d))
+
 ## [2.3.1](https://github.com/ivannovak/glide-plugin-node/compare/v2.3.0...v2.3.1) (2025-11-25)
 
 
