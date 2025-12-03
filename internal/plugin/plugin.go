@@ -3,8 +3,8 @@ package plugin
 import (
 	"context"
 
-	"github.com/ivannovak/glide-plugin-node/pkg/version"
-	"github.com/ivannovak/glide/v3/pkg/plugin/sdk/v2"
+	"github.com/glide-cli/glide-plugin-node/pkg/version"
+	"github.com/glide-cli/glide/v3/pkg/plugin/sdk/v2"
 )
 
 // Config defines the plugin's type-safe configuration.
@@ -47,7 +47,7 @@ func (p *NodePlugin) Metadata() v2.Metadata {
 		Author:      "Glide Team",
 		Description: "Node.js framework detector for Glide",
 		License:     "MIT",
-		Homepage:    "https://github.com/ivannovak/glide-plugin-node",
+		Homepage:    "https://github.com/glide-cli/glide-plugin-node",
 		Tags:        []string{"language", "node", "nodejs", "javascript", "typescript", "detector"},
 	}
 }
